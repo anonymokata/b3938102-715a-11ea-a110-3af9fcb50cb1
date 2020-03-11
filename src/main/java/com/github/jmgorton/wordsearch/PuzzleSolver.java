@@ -22,7 +22,15 @@ public class PuzzleSolver extends PuzzleReader {
 
     public PuzzleSolver(File f) {
 	this.file = f;
-	this.is = new FileInputStream(f);
+	try {
+	    this.is = new FileInputStream(this.file);
+	} catch (FileNotFoundException e) {
+	    System.err.println("file does not exist... Using System.in");
+	} catch (Exception e) {
+	    e.printStackTrace();
+	} finally {
+	    this.is = System.in;
+	}
     }
 
     public static void main(String[] args) {
