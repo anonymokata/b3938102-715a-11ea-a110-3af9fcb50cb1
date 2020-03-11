@@ -1,1 +1,6 @@
 com/github/jmgorton/wordsearch/App.class
+com/github/jmgorton/wordsearch/search/HorizSearcher.class
+com/github/jmgorton/wordsearch/search/Searcher.class
+com/github/jmgorton/wordsearch/Coord.class
+com/github/jmgorton/wordsearch/PuzzleSolver.class
+com/github/jmgorton/wordsearch/PuzzleReader.class
