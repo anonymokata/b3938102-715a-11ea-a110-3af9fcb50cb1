@@ -1,6 +1,6 @@
 package com.github.jmgorton.wordsearch;
 
-import java.io.*;
+// import java.io.*;
 
 /**
  * Hello world!

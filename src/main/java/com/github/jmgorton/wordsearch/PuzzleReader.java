@@ -10,8 +10,7 @@ public class PuzzleReader {
     public InputStream input;
 
     public PuzzleReader() {
-	// TODO Auto-generated constructor stub
-
+		
 	//	String filePath = "src/main/java/com/github/jmgorton/wordsearch/puzzles/Puzzle1a.txt";
 	//	this.file = new File(filePath);
 
@@ -126,6 +125,8 @@ public class PuzzleReader {
 	//	while (ps.is.hasNextLine()) {
 	//	    System.out.println(ps.is.nextLine());
 	//	}
+
+	s.close();
 
 	
     }

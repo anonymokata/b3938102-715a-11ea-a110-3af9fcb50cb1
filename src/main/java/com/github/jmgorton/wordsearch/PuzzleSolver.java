@@ -1,7 +1,7 @@
 package com.github.jmgorton.wordsearch;
 
 import java.io.*;
-import java.util.Scanner;
+// import java.util.Scanner;
 
 public class PuzzleSolver extends PuzzleReader {
 
@@ -9,7 +9,6 @@ public class PuzzleSolver extends PuzzleReader {
     //    public InputStream is;
 
     public PuzzleSolver() {
-	// TODO Auto-generated constructor stub
 
 	//	String filePath = "src/main/java/com/github/jmgorton/wordsearch/puzzles/Puzzle1a.txt";
 	//	this.file = new File(filePath);
