@@ -16,27 +16,49 @@ public class PuzzleSolver extends PuzzleReader {
 
 	//	this.is = new FileInputStream(this.file);
 
-	this.is = System.in;
-	this.file = null;
+	/////////////////////////////////////
+
+	//	this.is = System.in;
+	//	this.file = null;
+
+	/////////////////////////////////////
+
+	super();
+	System.out.println("puzzle solver default constructor");
+    }
+
+    public PuzzleSolver(String filePath) {
+	super(filePath);
+	System.out.println("puzzle solver filePath constructor");
     }
 
     public PuzzleSolver(File f) {
-	this.file = f;
-	try {
-	    this.is = new FileInputStream(this.file);
-	} catch (FileNotFoundException e) {
-	    System.err.println("file does not exist... Using System.in");
-	} catch (Exception e) {
-	    e.printStackTrace();
-	} finally {
-	    this.is = System.in;
-	}
+	//	this.file = f;
+	//	try {
+	//	    this.is = new FileInputStream(this.file);
+	//	} catch (FileNotFoundException e) {
+	//	    System.err.println("file does not exist... Using System.in");
+	//	} catch (Exception e) {
+	//	    e.printStackTrace();
+	//	} finally {
+	//	    if (this.is == null) {
+	//		this.is = System.in;
+	//	    }
+	//	}
+
+	/////////////////////////////////////
+
+	super(f);
+	System.out.println("puzzle solver file constructor");
+
     }
 
     public static void main(String[] args) {
 	System.out.println("Inside the puzzle solver!");
 
-	PuzzleSolver ps;
+	PuzzleSolver ps = null;
+
+	System.out.println("instantiating ps");
 
 	if (args != null && args.length > 0) {
 	    if (args.length > 1) {	
@@ -58,7 +80,9 @@ public class PuzzleSolver extends PuzzleReader {
 	    ps = new PuzzleSolver();
 	}
 
+	System.out.println("reading puzzle");
 	ps.readPuzzle();
+	System.out.println("end of func");
 
 	///////////////////////////////////////
 
