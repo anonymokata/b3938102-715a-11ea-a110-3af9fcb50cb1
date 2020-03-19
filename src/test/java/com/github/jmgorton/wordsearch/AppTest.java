@@ -44,17 +44,17 @@ public class AppTest {
     assertEquals(new File(path + "/puzzles/Puzzle1a.txt"), app.file);
   }
 
-  @Test
-  public void validInputFileCheckInput() {
-    String path = System.getProperty("user.dir");
-    File f = new File(path + "/puzzles/Puzzle1a.txt");
-    App app = new App(f);
-    // try {
-    //   assertEquals(new FileInputStream(f), app.input);
-    // } catch (Exception e) {
-    //   assertTrue(false);
-    // }
-  }
+//   @Test
+//   public void validInputFileCheckInput() {
+//     String path = System.getProperty("user.dir");
+//     File f = new File(path + "/puzzles/Puzzle1a.txt");
+//     App app = new App(f);
+//     try {
+//       assertEquals(new FileInputStream(f), app.input);
+//     } catch (Exception e) {
+//       assertTrue(false);
+//     }
+//   }
 
   @Test
   public void nullFilePathCheckFilePath() {
@@ -86,7 +86,7 @@ public class AppTest {
   @Test
   public void invalidFilePathCheckFile() {
     App app = new App("/foo/bar/baz");
-    assertEquals(app.file, new File("/foo/bar/baz")); // TODO dblcheck
+    assertEquals(app.file, new File("/foo/bar/baz"));
   }
 
   @Test
@@ -123,6 +123,6 @@ public class AppTest {
 
   @Test
   public void readPuzzle1() {
-      
+
   }
 }
