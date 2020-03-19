@@ -1,0 +1,45 @@
+package com.github.jmgorton.wordsearch;
+
+//import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+/**
+ * Unit test for simple App.
+ */
+public class AppTest 
+{
+    /**
+     * Rigorous Test :-)
+     */
+    @Test
+    public void shouldAnswerWithTrue()
+    {
+        assertTrue( true );
+    }
+
+    @Test
+    public void inputFilePath()
+    {
+	App app = new App("/puzzles/Puzzle1a.txt");
+	assertEquals(app.filePath, "/puzzles/Puzzle1a.txt");
+
+
+	//	assertNotEquals(app.input, System.in);
+    }
+
+    @Test
+    public void nullFilePath()
+    {
+	App app = new App(null);
+	assertNull(app.filePath);
+    }
+
+    @Test
+    public void invalidFilePath()
+    {
+	App app = new App("/foo/bar/baz");
+	assertEquals(app.input, System.in);
+    }
+}
