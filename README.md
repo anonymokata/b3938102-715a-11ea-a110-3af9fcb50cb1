@@ -30,7 +30,7 @@ To run a single test, or multiple specific tests, run
 ## Other Commands
 For an overview of what maven is, see [Maven's 5 Minute Guide]. 
 
-For a list of other maven lifecycle phases to target, check [this] out. [Lifecycle targets]
+For a list of other maven lifecycle phases to target, check [this][Lifecycle targets] out.
 
 [Maven's 5 Minute Guide]: https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html 
 [Lifecycle targets]: https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference
