@@ -4,17 +4,12 @@ import com.github.jmgorton.wordsearch.Coord;
 
 public class HorizSearcher implements Searcher {
 
-	public HorizSearcher() {
+  public HorizSearcher() {}
 
-	}
+  @Override
+  public Coord findWord(String word) {
+    return null;
+  }
 
-	@Override
-	public Coord findWord(String word) {
-		return null;
-	}
-
-	public static void main(String[] args) {
-
-	}
-
+  public static void main(String[] args) {}
 }

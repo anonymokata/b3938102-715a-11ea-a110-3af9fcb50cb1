@@ -1,0 +1,26 @@
+{
+  "name": "wordsearch",
+  "version": "1.0.0",
+  "description": "Wordsearch puzzle solver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pretty": "prettier --write \"./**/*.java\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmgorton/WordSearch2.git"
+  },
+  "author": "jmgorton",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/jmgorton/WordSearch2/issues"
+  },
+  "homepage": "https://github.com/jmgorton/WordSearch2#readme",
+  "dependencies": {
+    "prettier": "^1.19.1"
+  },
+  "devDependencies": {
+    "prettier-plugin-java": "^0.7.1"
+  }
+}
