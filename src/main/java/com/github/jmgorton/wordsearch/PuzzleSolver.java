@@ -6,49 +6,16 @@ import java.io.*;
 
 public class PuzzleSolver extends PuzzleReader {
 
-  //    public File file;
-  //    public InputStream is;
-
   public PuzzleSolver() {
-    //	String filePath = "src/main/java/com/github/jmgorton/wordsearch/puzzles/Puzzle1a.txt";
-    //	this.file = new File(filePath);
-
-    //	this.is = new FileInputStream(this.file);
-
-    /////////////////////////////////////
-
-    //	this.is = System.in;
-    //	this.file = null;
-
-    /////////////////////////////////////
-
     super();
-    System.out.println("puzzle solver default constructor");
   }
 
   public PuzzleSolver(String filePath) {
     super(filePath);
-    System.out.println("puzzle solver filePath constructor");
   }
 
   public PuzzleSolver(File f) {
-    //	this.file = f;
-    //	try {
-    //	    this.is = new FileInputStream(this.file);
-    //	} catch (FileNotFoundException e) {
-    //	    System.err.println("file does not exist... Using System.in");
-    //	} catch (Exception e) {
-    //	    e.printStackTrace();
-    //	} finally {
-    //	    if (this.is == null) {
-    //		this.is = System.in;
-    //	    }
-    //	}
-
-    /////////////////////////////////////
-
     super(f);
-    System.out.println("puzzle solver file constructor");
   }
 
   public static void main(String[] args) {

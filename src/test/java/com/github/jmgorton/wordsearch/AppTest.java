@@ -36,7 +36,8 @@ public class AppTest {
 
   @Test
   public void nullFilePath() {
-    App app = new App(null);
+    String s = null;
+    App app = new App(s);
     assertNull(app.filePath);
   }
 

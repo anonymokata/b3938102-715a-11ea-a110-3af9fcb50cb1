@@ -1,38 +1,19 @@
 package com.github.jmgorton.wordsearch;
 
-// import java.io.*;
+import java.io.File;
 
-/**
- * Hello world!
- *
- */
 public class App extends PuzzleSolver {
 
-  //    public String filePath;
-  //    public File file;
-  //    public InputStream input;
+  public App() {
+	  super();
+  }
 
   public App(String filePath) {
-    //	this.filePath = filePath;
-    //	try {
-    //	    if (filePath != null) {
-    //		this.file = new File(filePath);
-    //	    }
-    //	    if (this.file != null && this.file.exists() && this.file.canRead()) {
-    //		this.input = new FileInputStream(this.file);
-    //	    }
-    //	} catch (Exception e) {
-    //	    e.printStackTrace();
-    //	} finally {
-    //	    if (this.input == null) {
-    //		this.input = System.in;
-    //	    }
-    //	}
-
-    ///////////////////////////////////////
-
     super(filePath);
-    System.out.println("app filePath constructor");
+  }
+
+  public App(File f) {
+	  super(f);
   }
 
   public static void main(String[] args) {

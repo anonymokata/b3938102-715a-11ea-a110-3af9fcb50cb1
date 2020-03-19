@@ -9,14 +9,6 @@ public class PuzzleReader {
   public InputStream input;
 
   public PuzzleReader() {
-    //	String filePath = "src/main/java/com/github/jmgorton/wordsearch/puzzles/Puzzle1a.txt";
-    //	this.file = new File(filePath);
-
-    //	this.is = new FileInputStream(this.file);
-
-    /////////////////////////////////////////////////
-
-    System.out.println("puzzle reader default constructor");
     this.filePath = null;
     this.file = null;
     this.input = System.in;
@@ -39,31 +31,10 @@ public class PuzzleReader {
         this.input = System.in;
       }
     }
-
-    ///////////////////////////////////////////////
-
-    //	System.out.println("puzzle reader filePath constructor");
-    //	if (filePath == null) {
-    //	    this();
-    //	    System.out.println("input is System.in? " + this.input == System.in ? "true" : "false");
-    //	} else {
-    //	    File f = new File(filePath);
-    //	    this(f);
-    //	}
-
-    //////////////////////////////////////////////
-
-    //	this(new File(filePath != null ? filePath : ""));
-    System.out.println("puzzle reader filePath constructor");
   }
 
   public PuzzleReader(File f) {
     this();
-    System.out.println("puzzle reader file constructor");
-    //	if (f == null) {
-    //	    this();
-    //	    System.out.println("input is System.in? " + this.input == System.in ? "true" : "false");
-    //	} else {
     if (f != null) {
       if (f.exists() && f.canRead()) {
         try {
