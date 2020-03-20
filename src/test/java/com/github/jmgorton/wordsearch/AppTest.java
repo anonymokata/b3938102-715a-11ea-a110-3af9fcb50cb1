@@ -119,10 +119,4 @@ public class AppTest {
     assertEquals(app.input, System.in);
   }
 
-  
-
-  @Test
-  public void readPuzzle1() {
-
-  }
 }

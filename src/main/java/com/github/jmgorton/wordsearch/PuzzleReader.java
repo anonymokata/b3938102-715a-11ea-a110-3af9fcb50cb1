@@ -3,10 +3,16 @@ package com.github.jmgorton.wordsearch;
 import java.io.*;
 import java.util.Scanner;
 
+import com.github.jmgorton.wordsearch.model.Puzzle;
+// import com.github.jmgorton.wordsearch.model.PuzzleElement;
+
 public class PuzzleReader {
+
   public String filePath;
   public File file;
   public InputStream input;
+
+  public Puzzle puzzle;
 
   public PuzzleReader() {
     this.filePath = null;

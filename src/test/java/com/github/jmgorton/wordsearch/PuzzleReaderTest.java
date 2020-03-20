@@ -12,4 +12,9 @@ public class PuzzleReaderTest {
     PuzzleReader pr = new PuzzleReader(s);
     assertTrue(pr.input == System.in);
   }
+
+  @Test
+  public void readValidPuzzleCheckPuzzle() {
+    
+  }
 }
