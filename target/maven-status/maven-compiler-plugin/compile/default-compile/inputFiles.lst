@@ -1,6 +1,8 @@
 /Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/search/Searcher.java
+/Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/model/Puzzle.java
 /Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/Coord.java
 /Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/PuzzleSolver.java
+/Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/model/PuzzleElement.java
 /Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/search/HorizSearcher.java
 /Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/App.java
 /Users/jaredgorton/Documents/Maven/wordsearch/src/main/java/com/github/jmgorton/wordsearch/PuzzleReader.java

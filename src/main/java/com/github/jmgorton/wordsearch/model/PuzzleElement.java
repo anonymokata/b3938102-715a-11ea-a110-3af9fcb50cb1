@@ -7,12 +7,11 @@ public class PuzzleElement {
     Puzzle puzzle;
     PuzzleElement above, below, toRight, toLeft, aboveToRight, aboveToLeft, belowToRight, belowToLeft;
 
-    public PuzzleElement(final Integer val) {
+    public PuzzleElement(Integer val) {
         // assign this element's value
         this.value = val;
 
         // assign neighbors
-        this.value = null;
         this.above = null;
         this.below = null;
         this.toRight = null;
@@ -24,7 +23,7 @@ public class PuzzleElement {
 
     }
 
-    public PuzzleElement(final Integer val, final PuzzleElement toLeft) {
+    public PuzzleElement(Integer val, PuzzleElement toLeft) {
         this(val);
 
         if (toLeft != null) {
