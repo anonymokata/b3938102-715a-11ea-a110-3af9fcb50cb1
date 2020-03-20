@@ -14,7 +14,7 @@ public class PuzzleElementTest {
     }
 
     @Test
-    public void singleNeighborConstructor() {
+    public void singleNeighborConstructor() throws Exception {
         PuzzleElement a = new PuzzleElement(Integer.valueOf(45));
         PuzzleElement b = new PuzzleElement(Integer.valueOf(13), a);
         assertTrue(b.toLeft.value == 45);

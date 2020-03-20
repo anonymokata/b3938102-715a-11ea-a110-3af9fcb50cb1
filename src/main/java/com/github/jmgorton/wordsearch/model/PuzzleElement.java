@@ -23,7 +23,7 @@ public class PuzzleElement {
 
     }
 
-    public PuzzleElement(Integer val, PuzzleElement toLeft) {
+    public PuzzleElement(Integer val, PuzzleElement toLeft) throws Exception {
         this(val);
 
         if (toLeft != null) {
@@ -43,33 +43,34 @@ public class PuzzleElement {
             if (this.below != null) this.belowToRight = this.below.toRight;
 
             // basic check to make sure that we arrive at the same toRight value two different ways.
-            try {
-                if (this.aboveToRight.below != this.belowToRight.above) throw new Exception("Error parsing puzzle ...");
-            } catch (Exception e) {
-                if (e instanceof NullPointerException) {
-                    // bury this. probably just that this is a top-, bottom-, or right-edge element
-
-                    // if both errors would have been thrown, this still shouldn't execute ... refactor later
-                    if (this.aboveToRight != null) this.toRight = this.aboveToRight.below;
-                    else if (this.belowToRight != null) this.toRight = this.belowToRight.above;
+            if (this.aboveToRight != null) {
+                if (this.belowToRight != null) {
+                    if (this.aboveToRight.below != this.belowToRight.above) throw new Exception("Error parsing puzzle ...");
                 } else {
-                    System.err.println(e.getMessage());
-                    e.printStackTrace();
-                    e.printStackTrace(System.err);
-                    return;
+                    this.toRight = this.aboveToRight.below;
                 }
-            } finally {
-                updateNeighbors();
+            } else if (this.belowToRight != null) {
+                this.toRight = this.belowToRight.above;
             }
 
-            // // TODO test this ... might need to move into finally block -- will it get executed upon catching an error?
-            // if (this.aboveToRight != null) this.toRight = this.aboveToRight.below;
-            // else if (this.belowToRight != null) this.toRight = this.belowToRight.above;
-
-            // updateNeighbors();
+            updateNeighbors();
 
         }
 
+    }
+
+    public PuzzleElement(final Integer val, final PuzzleElement toLeft, final PuzzleElement above) throws Exception {
+        this(val, toLeft);
+
+        if (this.above == null) {
+            // TODO take care of this, or find a more efficient way
+        } else if (this.above != above) {
+            throw new Exception("Error parsing puzzle ...");
+        } else {
+            // i think we don't need to do anything in this case
+        }
+
+        updateNeighbors();
     }
 
     public PuzzleElement(final Integer val, final PuzzleElement above, final PuzzleElement below,
