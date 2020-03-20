@@ -8,16 +8,17 @@ public class PuzzleElementTest {
 
     @Test
     public void basicConstructor() {
-        PuzzleElement pe = new PuzzleElement(Integer.valueOf(3));
+        PuzzleElement pe = new PuzzleElement('A');
         // assertEquals(3, pe.value);
-        assertTrue(pe.value == 3);
+        assertTrue(pe.value == 'A');
     }
 
     @Test
     public void singleNeighborConstructor() throws Exception {
-        PuzzleElement a = new PuzzleElement(Integer.valueOf(45));
-        PuzzleElement b = new PuzzleElement(Integer.valueOf(13), a);
-        assertTrue(b.toLeft.value == 45);
+        PuzzleElement a = new PuzzleElement('A');
+        PuzzleElement b = new PuzzleElement('B', a);
+        assertTrue(b.toLeft.value == 'A');
+        assertFalse(b.toLeft.value == 'B');
     }
 
 }

@@ -2,12 +2,12 @@ package com.github.jmgorton.wordsearch.model;
 
 public class PuzzleElement {
 
-    Integer value;
+    Character value;
 
     Puzzle puzzle;
     PuzzleElement above, below, toRight, toLeft, aboveToRight, aboveToLeft, belowToRight, belowToLeft;
 
-    public PuzzleElement(Integer val) {
+    public PuzzleElement(Character val) {
         // assign this element's value
         this.value = val;
 
@@ -23,19 +23,26 @@ public class PuzzleElement {
 
     }
 
-    public PuzzleElement(Integer val, PuzzleElement toLeft) throws Exception {
+    /**
+     * could optimize this constructor using the knowledge that we will scan a puzzle from
+     * left to right and top to bottom
+     * @param val
+     * @param toLeft
+     * @throws Exception
+     */
+    public PuzzleElement(Character val, PuzzleElement elementToLeft) throws Exception {
         this(val);
 
-        if (toLeft != null) {
+        if (elementToLeft != null) {
 
-            this.toLeft = toLeft;
+            this.toLeft = elementToLeft;
 
             // no risk of NPE 
             // e.g. even if toLeft.above is null, this.aboveToLeft is equal to toLeft.above (both null)
-            this.aboveToLeft = toLeft.above;
-            this.belowToLeft = toLeft.below;
-            this.above = toLeft.aboveToRight;
-            this.below = toLeft.belowToRight;
+            this.aboveToLeft = elementToLeft.above;
+            this.belowToLeft = elementToLeft.below;
+            this.above = elementToLeft.aboveToRight;
+            this.below = elementToLeft.belowToRight;
 
             // if this != null and this.aboveToRight != null, this.above must also have a value
             // if the puzzle is a rectangle
@@ -51,6 +58,8 @@ public class PuzzleElement {
                 }
             } else if (this.belowToRight != null) {
                 this.toRight = this.belowToRight.above;
+            } else {
+                // element aboveToRight and belowToRight are both null... so leave element toRight as null
             }
 
             updateNeighbors();
@@ -59,21 +68,40 @@ public class PuzzleElement {
 
     }
 
-    public PuzzleElement(final Integer val, final PuzzleElement toLeft, final PuzzleElement above) throws Exception {
-        this(val, toLeft);
+    /**
+     * could optimize this constructor using the knowledge that we will scan a puzzle from
+     * left to right and top to bottom
+     * @param val letter value of this element in the puzzle
+     * @param toLeft
+     * @param above
+     * @throws Exception
+     */
+    public PuzzleElement(final Character val, final PuzzleElement elementToLeft, final PuzzleElement elementAbove) throws Exception {
+        this(val, elementToLeft);
 
         if (this.above == null) {
-            // TODO take care of this, or find a more efficient way
-        } else if (this.above != above) {
+            // handle row above this one
+            this.above = elementAbove;
+            this.aboveToLeft = elementAbove.toLeft;
+            this.aboveToRight = elementAbove.toRight;
+
+            if (elementAbove.belowToLeft != this.toLeft) {
+                throw new Exception("Error parsing puzzle ...");
+            }
+            if (elementAbove.belowToRight != this.toRight) {
+                throw new Exception("Error parsing puzzle ...");
+            }
+        } else if (this.above != elementAbove) {
             throw new Exception("Error parsing puzzle ...");
         } else {
+            // in the case that this.above is already set to the same element that was passed in ... 
             // i think we don't need to do anything in this case
         }
 
         updateNeighbors();
     }
 
-    public PuzzleElement(final Integer val, final PuzzleElement above, final PuzzleElement below,
+    public PuzzleElement(final Character val, final PuzzleElement above, final PuzzleElement below,
             final PuzzleElement toRight, final PuzzleElement toLeft, final PuzzleElement aboveToRight,
             final PuzzleElement aboveToLeft, final PuzzleElement belowToRight, final PuzzleElement belowToLeft) {
         
