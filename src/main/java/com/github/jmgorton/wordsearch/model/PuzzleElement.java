@@ -4,25 +4,14 @@ public class PuzzleElement {
 
     Integer value;
 
-    // TODO would coordinates help?
-
     Puzzle puzzle;
-
-    PuzzleElement above;
-    PuzzleElement below;
-    PuzzleElement toRight;
-    PuzzleElement toLeft;
-    PuzzleElement aboveToRight;
-    PuzzleElement aboveToLeft;
-    PuzzleElement belowToRight;
-    PuzzleElement belowToLeft;
+    PuzzleElement above, below, toRight, toLeft, aboveToRight, aboveToLeft, belowToRight, belowToLeft;
 
     public PuzzleElement(final Integer val) {
         // assign this element's value
         this.value = val;
 
-        // assign neighbors -- these null assignments aren't necessary
-        // unless there's some case where we could get a "value may not have been initialized" warning somewhere
+        // assign neighbors
         this.value = null;
         this.above = null;
         this.below = null;
@@ -33,27 +22,26 @@ public class PuzzleElement {
         this.belowToRight = null;
         this.belowToLeft = null;
 
-        // update neighbors to recognize this element -- but this element currently has no neighbors
-        // updateNeighbors();
     }
 
     public PuzzleElement(final Integer val, final PuzzleElement toLeft) {
-        this.value = val;
+        this(val);
 
         if (toLeft != null) {
 
             this.toLeft = toLeft;
 
-            // these if blocks aren't strictly necessarily, could just assign directly. no risk of NPE
+            // no risk of NPE 
             // e.g. even if toLeft.above is null, this.aboveToLeft is equal to toLeft.above (both null)
-            if (toLeft.above != null) this.aboveToLeft = toLeft.above; else this.aboveToLeft = null;
-            if (toLeft.below != null) this.belowToLeft = toLeft.below; else this.belowToLeft = null;
-            if (toLeft.aboveToRight != null) this.above = toLeft.aboveToRight; else this.above = null;
-            if (toLeft.belowToRight != null) this.below = toLeft.belowToRight; else this.below = null;
+            this.aboveToLeft = toLeft.above;
+            this.belowToLeft = toLeft.below;
+            this.above = toLeft.aboveToRight;
+            this.below = toLeft.belowToRight;
 
             // if this != null and this.aboveToRight != null, this.above must also have a value
-            if (this.above != null) this.aboveToRight = this.above.toRight; else this.aboveToRight = null;
-            if (this.below != null) this.belowToRight = this.below.toRight; else this.belowToRight = null;
+            // if the puzzle is a rectangle
+            if (this.above != null) this.aboveToRight = this.above.toRight;
+            if (this.below != null) this.belowToRight = this.below.toRight;
 
             // basic check to make sure that we arrive at the same toRight value two different ways.
             try {
@@ -61,32 +49,28 @@ public class PuzzleElement {
             } catch (Exception e) {
                 if (e instanceof NullPointerException) {
                     // bury this. probably just that this is a top-, bottom-, or right-edge element
+
+                    // if both errors would have been thrown, this still shouldn't execute ... refactor later
+                    if (this.aboveToRight != null) this.toRight = this.aboveToRight.below;
+                    else if (this.belowToRight != null) this.toRight = this.belowToRight.above;
                 } else {
+                    System.err.println(e.getMessage());
                     e.printStackTrace();
+                    e.printStackTrace(System.err);
+                    return;
                 }
             } finally {
-
+                updateNeighbors();
             }
 
-            // TODO test this ... might need to move into finally block or restructure
-            if (this.aboveToRight != null) this.toRight = this.aboveToRight.below;
-            else if (this.belowToRight != null) this.toRight = this.belowToRight.above;
-            else this.toRight = null;
+            // // TODO test this ... might need to move into finally block -- will it get executed upon catching an error?
+            // if (this.aboveToRight != null) this.toRight = this.aboveToRight.below;
+            // else if (this.belowToRight != null) this.toRight = this.belowToRight.above;
 
-        } else {
+            // updateNeighbors();
 
-            this.above = null;
-            this.below = null;
-            this.toRight = null;
-            this.toLeft = null;
-            this.aboveToRight = null;
-            this.aboveToLeft = null;
-            this.belowToRight = null;
-            this.belowToLeft = null;
-            
         }
 
-        updateNeighbors();
     }
 
     public PuzzleElement(final Integer val, final PuzzleElement above, final PuzzleElement below,
