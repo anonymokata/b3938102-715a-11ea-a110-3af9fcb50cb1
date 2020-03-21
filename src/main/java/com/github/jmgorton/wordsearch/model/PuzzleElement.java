@@ -113,9 +113,9 @@ public class PuzzleElement {
         updateNeighbors();
     }
 
-    public PuzzleElement(final Character val, final PuzzleElement above, final PuzzleElement below,
-            final PuzzleElement toRight, final PuzzleElement toLeft, final PuzzleElement aboveToRight,
-            final PuzzleElement aboveToLeft, final PuzzleElement belowToRight, final PuzzleElement belowToLeft) {
+    public PuzzleElement(final Character val, final PuzzleElement above, final PuzzleElement aboveToRight,
+            final PuzzleElement toRight, final PuzzleElement belowToRight, final PuzzleElement below,
+            final PuzzleElement belowToLeft, final PuzzleElement toLeft, final PuzzleElement aboveToLeft) {
         
         // assign all values
         this.value = val;
