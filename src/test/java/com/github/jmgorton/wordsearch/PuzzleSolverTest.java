@@ -14,7 +14,9 @@ public class PuzzleSolverTest {
         assertNull(a.filePath);
         assertEquals(a.input, System.in);
 
-        assertNull(a.puzzle);
+        assertNotNull(a.puzzle);
+        assertNotNull(a.puzzle.hiddenWords);
+        assertNull(a.puzzle.topLeftCorner);
     }
 
 }

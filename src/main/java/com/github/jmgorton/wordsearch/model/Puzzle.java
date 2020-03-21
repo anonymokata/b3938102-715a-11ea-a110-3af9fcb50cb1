@@ -6,10 +6,10 @@ public class Puzzle {
 
     public List<String> hiddenWords;
 
-    public PuzzleElement topLeftCorner;
+    public PuzzleElement topLeftCorner = null;
 
     public Puzzle() {
-        
+        this.hiddenWords = new ArrayList<String>();
     }
 
 }

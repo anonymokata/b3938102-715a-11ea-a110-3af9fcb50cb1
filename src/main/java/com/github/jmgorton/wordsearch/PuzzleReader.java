@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.Scanner;
 
 import com.github.jmgorton.wordsearch.model.Puzzle;
-// import com.github.jmgorton.wordsearch.model.PuzzleElement;
+import com.github.jmgorton.wordsearch.model.PuzzleElement;
 
 public class PuzzleReader {
 
@@ -18,10 +18,13 @@ public class PuzzleReader {
     this.filePath = null;
     this.file = null;
     this.input = System.in;
+
+    this.puzzle = new Puzzle();
   }
 
   public PuzzleReader(String filePath) {
     this.filePath = filePath;
+    this.puzzle = new Puzzle();
     try {
       if (this.filePath != null) {
         this.file = new File(filePath);
@@ -60,31 +63,88 @@ public class PuzzleReader {
     }
   }
 
-  public void readPuzzle() {
-    System.out.println("readPuzzle");
+  public void readPuzzle() throws Exception {
+
     Scanner s = new Scanner(this.input);
-    String[] wordsToFind;
 
     if (s.hasNextLine()) {
       String toParse = s.nextLine();
-      wordsToFind = toParse.split(",");
+      String[] wordsToFind = toParse.split(",");
       for (String str : wordsToFind) {
-        System.out.println(str);
+        // System.out.println(str);
+        this.puzzle.hiddenWords.add(str);
       }
     }
 
+    PuzzleElement firstColRowAboveElement = null;
+    PuzzleElement firstColThisRowElement = null;
+    PuzzleElement toLeftElement = null;
+    // if efficiency was a main goal, we would probably handle the first line separately
+    // so we could eliminate if-blocks if there are many rows to iterate over
     while (s.hasNextLine()) {
+      // get a String array of the letters to compose the elements of this puzzle
       String toParse = s.nextLine();
-      System.out.println(toParse);
-    }
+      toParse = toParse.trim();
+      if (toParse.isEmpty()) continue;
 
-    System.out.println("end of func readPuzzle()");
+      String[] thisRowStrings = toParse.split(",");
+      Character[] thisRowLetters = convertStoC(thisRowStrings);
+
+      // handle the first element to be inserted in this row ...
+      Character firstColCharacter = thisRowLetters[0];
+      // update "special" elements upon moving to new row
+      toLeftElement = null;
+      firstColRowAboveElement = firstColThisRowElement;
+      firstColThisRowElement = new PuzzleElement(firstColCharacter, toLeftElement, firstColRowAboveElement);
+
+      // if this is the first row, set the first element as this puzzle's top left corner
+      if (firstColRowAboveElement == null && toLeftElement == null) {
+        this.puzzle.topLeftCorner = firstColThisRowElement;
+      }
+      
+      // prepare to begin appending elements to this row, via first element
+      toLeftElement = firstColThisRowElement;
+
+      for (int i = 1; i < thisRowLetters.length; i++) {
+        PuzzleElement thisElement = new PuzzleElement(thisRowLetters[i], toLeftElement);
+        toLeftElement = thisElement;
+      }
+
+      // check output
+      // System.out.println(toParse);
+      // PuzzleElement temp = firstColThisRowElement;
+      // do {
+      //   System.out.println(temp.value + ":");
+      // } while (temp.toRight != null);
+    }
 
     s.close();
   }
 
+  private static Character[] convertStoC(String[] in) {
+    Character[] out = new Character[in.length];
+
+    for (int i = 0; i < in.length; i++) {
+      System.out.print(in[i]);
+      if (in[i] == null || in[i].length() == 0) {
+        System.out.println('*');
+        continue;
+      }
+
+      if (in[i].length() > 1) {
+        // TODO throw an exception or don't worry about it ???
+        System.out.println('*');
+        continue;
+      }
+
+      out[i] = in[i].charAt(0);
+    }
+    System.out.println();
+
+    return out;
+  }
+
   public static void main(String[] args) {
-    System.out.println("Inside the puzzle solver!");
 
     PuzzleSolver ps = new PuzzleSolver();
 

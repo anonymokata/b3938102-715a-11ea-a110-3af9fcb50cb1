@@ -85,23 +85,25 @@ public class PuzzleElement {
         this(val, elementToLeft);
 
         if (this.above == null) {
-            // handle row above this one
-            this.above = elementAbove;
-            this.aboveToLeft = elementAbove.toLeft;
-            this.aboveToRight = elementAbove.toRight;
+            if (elementAbove != null) {
+                // handle row above this one
+                this.above = elementAbove;
+                this.aboveToLeft = elementAbove.toLeft;
+                this.aboveToRight = elementAbove.toRight;
 
-            // FIXME assumes both argument elements are vertices of a connected graph
-            // if elements are members of two separate graphs, even if the insertion would "fit" ...
-            // the verification throws an error and breaks it -- could probably just add a non-null check
-            if (elementAbove.belowToLeft != this.toLeft) {
-                throw new Exception("Error parsing puzzle ... Conflicting values for left neighbor: "
-                + (this.toLeft == null ? "null" : this.toLeft.value) + ", " 
-                + (elementAbove.belowToLeft == null ? "null" : elementAbove.belowToLeft.value));
-            }
-            if (elementAbove.belowToRight != this.toRight) {
-                throw new Exception("Error parsing puzzle ... Conflicting values for right neighbor: "
-                + (this.toRight == null ? "null" : this.toRight.value) + ", " 
-                + (elementAbove.belowToRight == null ? "null" : elementAbove.belowToRight.value));
+                // FIXME assumes both argument elements are vertices of a connected graph
+                // if elements are members of two separate graphs, even if the insertion would "fit" ...
+                // the verification throws an error and breaks it -- could probably just add a non-null check
+                if (elementAbove.belowToLeft != this.toLeft) {
+                    throw new Exception("Error parsing puzzle ... Conflicting values for left neighbor: "
+                    + (this.toLeft == null ? "null" : this.toLeft.value) + ", " 
+                    + (elementAbove.belowToLeft == null ? "null" : elementAbove.belowToLeft.value));
+                }
+                if (elementAbove.belowToRight != this.toRight) {
+                    throw new Exception("Error parsing puzzle ... Conflicting values for right neighbor: "
+                    + (this.toRight == null ? "null" : this.toRight.value) + ", " 
+                    + (elementAbove.belowToRight == null ? "null" : elementAbove.belowToRight.value));
+                }
             }
         } else if (this.above != elementAbove) {
             throw new Exception("Error parsing puzzle ... Conflicting values for above neighbor: "

@@ -46,7 +46,12 @@ public class PuzzleSolver extends PuzzleReader {
     }
 
     System.out.println("reading puzzle");
-    ps.readPuzzle();
+
+    try {
+      ps.readPuzzle();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     System.out.println("end of func");
     ///////////////////////////////////////
 
