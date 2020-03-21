@@ -4,6 +4,8 @@ public class PuzzleElement {
 
     public Character value;
 
+    public Coord location = null;
+
     public Puzzle puzzle;
     public PuzzleElement above, below, toRight, toLeft, aboveToRight, aboveToLeft, belowToRight, belowToLeft;
 
@@ -130,6 +132,10 @@ public class PuzzleElement {
         this.belowToLeft = belowToLeft;
 
         updateNeighbors();
+    }
+
+    public void setCoords(Coord loc) {
+        this.location = loc;
     }
 
     public void updateNeighbors() {

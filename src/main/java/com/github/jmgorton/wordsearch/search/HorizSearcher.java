@@ -1,6 +1,6 @@
 package com.github.jmgorton.wordsearch.search;
 
-import com.github.jmgorton.wordsearch.Coord;
+import com.github.jmgorton.wordsearch.model.Coord;
 
 public class HorizSearcher implements Searcher {
 
@@ -8,8 +8,12 @@ public class HorizSearcher implements Searcher {
 
   @Override
   public Coord findWord(String word) {
+
     return null;
+
   }
 
-  public static void main(String[] args) {}
+  public static void main(String[] args) {
+    
+  }
 }

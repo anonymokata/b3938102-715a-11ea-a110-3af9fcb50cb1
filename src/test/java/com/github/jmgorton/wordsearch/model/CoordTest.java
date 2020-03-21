@@ -1,4 +1,4 @@
-package com.github.jmgorton.wordsearch;
+package com.github.jmgorton.wordsearch.model;
 
 import static org.junit.Assert.*;
 
