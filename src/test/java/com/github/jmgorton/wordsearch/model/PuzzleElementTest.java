@@ -51,9 +51,13 @@ public class PuzzleElementTest {
         PuzzleElement a = new PuzzleElement('A', null, d);
         PuzzleElement c = new PuzzleElement('C', a, b);
 
+        
+
         assertEquals(c.toLeft.value, Character.valueOf('A'));
-        assertEquals(a.value, Character.valueOf('A'));
         assertEquals(b.below.value, Character.valueOf('C'));
+        assertEquals(b.toLeft.value, Character.valueOf('D'));
+        assertEquals(d.toRight.value, Character.valueOf('B'));
+        assertEquals(d.below.value, Character.valueOf('A'));
 
         assertNull(c.below);
         assertNull(c.toRight);

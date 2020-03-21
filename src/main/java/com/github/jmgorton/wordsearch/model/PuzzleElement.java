@@ -53,7 +53,9 @@ public class PuzzleElement {
             if (this.aboveToRight != null) {
                 if (this.belowToRight != null) {
                     if (this.aboveToRight.below != this.belowToRight.above) throw new Exception("Error parsing puzzle ..."
-                    + " Conflicting values for right neighbor: " + this.aboveToRight.below.value + ", " + this.belowToRight.above.value);
+                    + " Conflicting values for right neighbor: " 
+                    + (this.aboveToRight.below == null ? "null" : this.aboveToRight.below.value) + ", " 
+                    + (this.belowToRight.above == null ? "null" : this.belowToRight.above.value));
                 } else {
                     this.toRight = this.aboveToRight.below;
                 }
@@ -73,9 +75,9 @@ public class PuzzleElement {
      * could optimize this constructor using the knowledge that we will scan a puzzle from
      * left to right and top to bottom
      * @param val letter value of this element in the puzzle
-     * @param toLeft
-     * @param above
-     * @throws Exception
+     * @param toLeft element to exist to the left of this one
+     * @param above element to exist above this one
+     * @throws Exception a potential inconsistency has been discovered
      */
     public PuzzleElement(final Character val, final PuzzleElement elementToLeft, final PuzzleElement elementAbove) throws Exception {
         this(val, elementToLeft);
@@ -96,11 +98,13 @@ public class PuzzleElement {
             }
             if (elementAbove.belowToRight != this.toRight) {
                 throw new Exception("Error parsing puzzle ... Conflicting values for right neighbor: "
-                + this.toRight.value + ", " + elementAbove.belowToRight.value);
+                + (this.toRight == null ? "null" : this.toRight.value) + ", " 
+                + (elementAbove.belowToRight == null ? "null" : elementAbove.belowToRight.value));
             }
         } else if (this.above != elementAbove) {
             throw new Exception("Error parsing puzzle ... Conflicting values for above neighbor: "
-            + this.above.value + ", " + elementAbove.value + " (potential invalid argument)");
+            + this.above.value + ", " 
+            + (elementAbove == null ? "null" : elementAbove.value) + " (potential invalid argument)");
         } else {
             // in the case that this.above is already set to the same element that was passed in ... 
             // i think we don't need to do anything in this case
