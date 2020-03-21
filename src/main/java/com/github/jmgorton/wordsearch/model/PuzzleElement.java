@@ -2,10 +2,10 @@ package com.github.jmgorton.wordsearch.model;
 
 public class PuzzleElement {
 
-    Character value;
+    public Character value;
 
-    Puzzle puzzle;
-    PuzzleElement above, below, toRight, toLeft, aboveToRight, aboveToLeft, belowToRight, belowToLeft;
+    public Puzzle puzzle;
+    public PuzzleElement above, below, toRight, toLeft, aboveToRight, aboveToLeft, belowToRight, belowToLeft;
 
     public PuzzleElement(Character val) {
         // assign this element's value

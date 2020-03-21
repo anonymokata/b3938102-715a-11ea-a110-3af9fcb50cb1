@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Puzzle {
 
-    List<String> hiddenWords;
+    public List<String> hiddenWords;
 
-    PuzzleElement topLeftCorner;
+    public PuzzleElement topLeftCorner;
 
     public Puzzle() {
         
