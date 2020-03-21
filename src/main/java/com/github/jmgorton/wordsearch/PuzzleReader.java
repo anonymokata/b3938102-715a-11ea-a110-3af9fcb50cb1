@@ -3,6 +3,7 @@ package com.github.jmgorton.wordsearch;
 import java.io.*;
 import java.util.Scanner;
 
+import com.github.jmgorton.wordsearch.model.Coord;
 import com.github.jmgorton.wordsearch.model.Puzzle;
 import com.github.jmgorton.wordsearch.model.PuzzleElement;
 
@@ -76,17 +77,21 @@ public class PuzzleReader {
       }
     }
 
+    // for maintaining coordinates
+    Integer row = 0;
+
     PuzzleElement firstColRowAboveElement = null;
     PuzzleElement firstColThisRowElement = null;
     PuzzleElement toLeftElement = null;
     // if efficiency was a main goal, we would probably handle the first line separately
     // so we could eliminate if-blocks if there are many rows to iterate over
     while (s.hasNextLine()) {
-      // get a String array of the letters to compose the elements of this puzzle
+      // validate next string
       String toParse = s.nextLine();
       toParse = toParse.trim();
       if (toParse.isEmpty()) continue;
 
+      // get a String array of the letters to compose the elements of this puzzle
       String[] thisRowStrings = toParse.split(",");
       Character[] thisRowLetters = convertStoC(thisRowStrings);
 
@@ -100,6 +105,8 @@ public class PuzzleReader {
       // if this is the first row, set the first element as this puzzle's top left corner
       if (firstColRowAboveElement == null && toLeftElement == null) {
         this.puzzle.topLeftCorner = firstColThisRowElement;
+        Coord origin = new Coord(0, 0);
+        this.puzzle.topLeftCorner.setCoords(origin);
       }
       
       // prepare to begin appending elements to this row, via first element
@@ -107,6 +114,8 @@ public class PuzzleReader {
 
       for (int i = 1; i < thisRowLetters.length; i++) {
         PuzzleElement thisElement = new PuzzleElement(thisRowLetters[i], toLeftElement);
+        Coord loc = new Coord(row, i);
+        thisElement.setCoords(loc);
         toLeftElement = thisElement;
       }
 
@@ -116,6 +125,8 @@ public class PuzzleReader {
       // do {
       //   System.out.println(temp.value + ":");
       // } while (temp.toRight != null);
+
+      row++;
     }
 
     s.close();
@@ -125,21 +136,21 @@ public class PuzzleReader {
     Character[] out = new Character[in.length];
 
     for (int i = 0; i < in.length; i++) {
-      System.out.print(in[i]);
+      // System.out.print(in[i]);
       if (in[i] == null || in[i].length() == 0) {
-        System.out.println('*');
+        // System.out.println('*');
         continue;
       }
 
       if (in[i].length() > 1) {
         // TODO throw an exception or don't worry about it ???
-        System.out.println('*');
+        // System.out.println('*');
         continue;
       }
 
       out[i] = in[i].charAt(0);
     }
-    System.out.println();
+    // System.out.println();
 
     return out;
   }

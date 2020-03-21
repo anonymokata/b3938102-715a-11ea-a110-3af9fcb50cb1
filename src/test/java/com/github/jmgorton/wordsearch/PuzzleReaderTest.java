@@ -44,6 +44,7 @@ public class PuzzleReaderTest {
     assertEquals(pr.puzzle.topLeftCorner.value, Character.valueOf('Y'));
 
     Coord zero = new Coord(0, 0);
-    assertEquals(pr.puzzle.topLeftCorner.location, zero);
+    assertEquals(pr.puzzle.topLeftCorner.location.x, zero.x);
+    assertEquals(pr.puzzle.topLeftCorner.location.y, zero.y);
   }
 }

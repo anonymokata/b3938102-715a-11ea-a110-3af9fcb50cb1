@@ -9,7 +9,7 @@ public class PuzzleElement {
     public Puzzle puzzle;
     public PuzzleElement above, below, toRight, toLeft, aboveToRight, aboveToLeft, belowToRight, belowToLeft;
 
-    public PuzzleElement(Character val) {
+    public PuzzleElement(final Character val) {
         // assign this element's value
         this.value = val;
 
@@ -32,7 +32,7 @@ public class PuzzleElement {
      * @param toLeft
      * @throws Exception
      */
-    public PuzzleElement(Character val, PuzzleElement elementToLeft) throws Exception {
+    public PuzzleElement(final Character val, final PuzzleElement elementToLeft) throws Exception {
         this(val);
 
         if (elementToLeft != null) {
@@ -104,6 +104,9 @@ public class PuzzleElement {
                     + (this.toRight == null ? "null" : this.toRight.value) + ", " 
                     + (elementAbove.belowToRight == null ? "null" : elementAbove.belowToRight.value));
                 }
+
+                updateNeighbors();
+
             }
         } else if (this.above != elementAbove) {
             throw new Exception("Error parsing puzzle ... Conflicting values for above neighbor: "
@@ -114,7 +117,9 @@ public class PuzzleElement {
             // i think we don't need to do anything in this case
         }
 
-        updateNeighbors();
+        // TODO investigate ... for some reason this was causing neighbors that should have
+        // stayed null to be instantiated ... i think
+        // updateNeighbors();
     }
 
     public PuzzleElement(final Character val, final PuzzleElement above, final PuzzleElement aboveToRight,
