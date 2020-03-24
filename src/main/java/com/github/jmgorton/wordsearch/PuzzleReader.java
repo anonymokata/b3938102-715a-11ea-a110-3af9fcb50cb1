@@ -127,35 +127,8 @@ public class PuzzleReader {
         toLeftElement = thisElement;
       }
 
-      // check output
-      // System.out.println(toParse);
-      // PuzzleElement temp = firstColThisRowElement;
-      // do {
-      //   System.out.print(temp.value + ":");
-      // } while ((temp = temp.toRight) != null);
-      // System.out.println();
-
       row++;
     }
-
-    // check output more
-    // PuzzleElement here = this.puzzle.topLeftCorner;
-    // PuzzleElement below = here.below;
-    // while (here != null) {
-    //   while (here != null) {
-    //     System.out.print(here.value + ":");
-    //     here = here.toRight;
-    //   }
-
-    //   System.out.println();
-
-    //   here = below;
-    //   if (here != null) below = here.below;
-    // }
-
-    // for (String str : this.puzzle.hiddenWords) {
-    //   System.out.println(str);
-    // }
 
     s.close();
   }
@@ -163,7 +136,6 @@ public class PuzzleReader {
   // private helper methods
 
   private static Character[] convertStoC(String[] in) {
-    // TODO trim, insert spaces if necessary ??
     Character[] out = new Character[in.length];
 
     for (int i = 0; i < in.length; i++) {
@@ -171,27 +143,19 @@ public class PuzzleReader {
       if (in[i] == null) temp = "";
       else temp = in[i].trim();
 
-      // System.out.print(in[i]);
-      if (in[i] == null || in[i].length() == 0) {
-        // System.out.println('*');
+      if (temp.length() == 0) {
         out[i] = ' ';
         continue;
       }
 
-      if (in[i].length() > 1) {
-        // TODO throw an exception or don't worry about it ???
-        // System.out.println('*');
+      if (temp.length() > 1) {
+        // return null or don't worry about it ??? consider and address later if it comes up
         out[i] = ' ';
         continue;
       }
-
-      // check for alphanumeric ??
-      // if ()
 
       out[i] = temp.charAt(0);
-      // out[i] = in[i].charAt(0);
     }
-    // System.out.println();
 
     return out;
   }
