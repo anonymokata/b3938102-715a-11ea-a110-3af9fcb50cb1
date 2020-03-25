@@ -1,10 +1,15 @@
 package com.github.jmgorton.wordsearch;
 
 import java.io.*;
+import java.util.List;
+
+import com.github.jmgorton.wordsearch.model.Coord;
 
 // import java.util.Scanner;
 
 public class PuzzleSolver extends PuzzleReader {
+
+  // constructors
 
   public PuzzleSolver() {
     super();
@@ -16,6 +21,37 @@ public class PuzzleSolver extends PuzzleReader {
 
   public PuzzleSolver(File f) {
     super(f);
+  }
+
+  // instance methods
+
+  public Boolean solve() {
+
+    List<String> words = this.puzzle.hiddenWords;
+
+    for (String word : words) {
+      Coord[] loc = findWord(word);
+      this.puzzle.locs.add(loc);
+      // if (loc == null) return false;
+      // else {
+      //   // print the locations according to spec
+      // }
+    }
+
+    return true;
+  }
+
+  private Coord[] findWord(String word) {
+    Coord[] ret = null;
+
+    ret = findWordHoriz(word);
+
+    return ret;
+  }
+
+  private Coord[] findWordHoriz(String word) {
+    Coord[] ret = null;
+    return ret;
   }
 
   public static void main(String[] args) {

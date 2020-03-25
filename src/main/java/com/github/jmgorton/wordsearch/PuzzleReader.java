@@ -122,7 +122,7 @@ public class PuzzleReader {
         // append each new element, set it's coordinates, and update the "cursor"
         // TODO set new topRightCorner and bottomLeftCorner fields
         PuzzleElement thisElement = new PuzzleElement(thisRowLetters[i], toLeftElement);
-        Coord loc = new Coord(row, i);
+        Coord loc = new Coord(i, row);
         thisElement.setCoords(loc);
         toLeftElement = thisElement;
       }
