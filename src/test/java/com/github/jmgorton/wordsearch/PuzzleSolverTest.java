@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
 
+import com.github.jmgorton.wordsearch.model.Coord;
+
 import org.junit.Test;
 
 public class PuzzleSolverTest {
@@ -36,6 +38,10 @@ public class PuzzleSolverTest {
         assertEquals(1, p.puzzle.locs.size());
         assertNotNull(p.puzzle.locs.get(0));
         assertEquals(5, p.puzzle.locs.get(0).length);
+
+        for (Coord c : p.puzzle.locs.get(0)) {
+            System.out.println(c.toString());
+        }
 
         assertEquals(Integer.valueOf(7), p.puzzle.locs.get(0)[0].x);
         assertEquals(Integer.valueOf(3), p.puzzle.locs.get(0)[4].x);

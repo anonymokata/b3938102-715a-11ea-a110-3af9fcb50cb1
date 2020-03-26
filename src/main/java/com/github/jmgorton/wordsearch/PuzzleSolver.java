@@ -136,15 +136,18 @@ public class PuzzleSolver extends PuzzleReader {
     // System.out.println(wordRev);
 
     PuzzleElement cursor = this.puzzle.topLeftCorner;
+    PuzzleElement lineReset = cursor.below;
+    PuzzleElement checkIfFound;
     Integer calcIts = this.puzzle.size - word.length() + 1;
+    Boolean found, foundRev;
+
     for (int i = 0; i < calcIts; i++) {
       // again uses assumption that puzzle will be square
       for (int j = 0; j < calcIts; j++) {
 
         // leave cursor as our placeholder, then iterate in the diagonal descending 
         // direction checking both word and wordRev to see if this is a match
-        PuzzleElement checkIfFound = cursor;
-        Boolean found, foundRev;
+        checkIfFound = cursor;
         found = foundRev = true;
         for (int k = 0; k < word.length(); k++) {
 
@@ -163,13 +166,13 @@ public class PuzzleSolver extends PuzzleReader {
 
             if (found) {
               for (int s = 0; s < word.length(); s++) {
-                Coord c = new Coord(j - s, i - s);
-                locs[word.length() - 1 - s] = c;
+                Coord c = new Coord(j + s, i + s);
+                locs[s] = c;
               }
             } else {
               for (int s = 0; s < word.length(); s++) {
-                Coord c = new Coord(j - s, i - s);
-                locs[s] = c;
+                Coord c = new Coord(j + s, i + s);
+                locs[word.length() - 1 - s] = c;
               }
             }
 
@@ -185,7 +188,11 @@ public class PuzzleSolver extends PuzzleReader {
 
         }
 
+        // because we have the i and j counters, we should never have a NPE due to this
+        cursor = cursor.toRight;
       }
+      cursor = lineReset;
+      lineReset = cursor.below;
     }
 
     // return ret;
