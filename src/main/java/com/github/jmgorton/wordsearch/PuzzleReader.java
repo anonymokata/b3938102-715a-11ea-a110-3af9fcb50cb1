@@ -101,6 +101,9 @@ public class PuzzleReader {
       String[] thisRowStrings = toParse.split(",");
       Character[] thisRowLetters = convertStoC(thisRowStrings);
 
+      // set size of puzzle
+      this.puzzle.size = thisRowLetters.length;
+
       // handle the first element to be inserted in this row ...
       Character firstColCharacter = thisRowLetters[0];
       // update "special" elements upon moving to new row
