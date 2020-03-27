@@ -33,7 +33,7 @@ public class PuzzleSolverTest {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        p.solve();
+        p.search();
 
         assertEquals(1, p.puzzle.locs.size());
         assertNotNull(p.puzzle.locs.get(0));
@@ -81,9 +81,9 @@ public class PuzzleSolverTest {
         Method reverseWord = PuzzleSolver.class.getDeclaredMethod("reverseWord", argTypes);
         reverseWord.setAccessible(true);
 
-        String output = (String) reverseWord.invoke(ps, "absolute oddnumber");
+        String output = (String) reverseWord.invoke(ps, "absolute anoddnumber");
 
-        assertEquals("rebmunddo etulosba", output);
+        assertEquals("rebmunddona etulosba", output);
         assertNotEquals("someotherstring", output);
     }
 

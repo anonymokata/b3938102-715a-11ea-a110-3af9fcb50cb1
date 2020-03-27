@@ -2,7 +2,7 @@ package com.github.jmgorton.wordsearch;
 
 import java.io.*;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,95 +13,109 @@ import com.github.jmgorton.wordsearch.model.PuzzleElement;
 
 public class PuzzleSolver extends PuzzleReader {
 
+  // instance variables
+
+  Method[] finderMethods;  
+  List<String> yetToFind;
+
   // constructors
 
   public PuzzleSolver() {
     super();
+    collectFinderMethods();
   }
 
   public PuzzleSolver(String filePath) {
     super(filePath);
+    collectFinderMethods();
   }
 
   public PuzzleSolver(File f) {
     super(f);
+    collectFinderMethods();
   }
 
   // instance methods
 
-  public Boolean solve() {
+  public Boolean search() {
 
-    List<String> words = this.puzzle.hiddenWords;
+    PuzzleElement cursor = this.puzzle.topLeftCorner;
+    PuzzleElement lineReset;
 
-    for (String word : words) {
-      Coord[] loc = findWord(word);
-      // this.puzzle.locs.add(loc);
+    // this copies values
+    this.yetToFind = new ArrayList<String>(this.puzzle.hiddenWords);
+    // this copies reference
+    // this.yetToFind = this.puzzle.hiddenWords;
 
-      // if (loc == null) return false;
-      // else {
-      //   // print the locations according to spec
-      // }
+    // TODO change this to the puzzleelement assignment ... do we need i, j for assigning coords?
+    // no we should have the coords within the puzzle element
+    for (int i = 0; i < this.puzzle.size; i++) {
+
+      lineReset = cursor.below;
+
+      // again uses assumption that puzzle will be square
+      for (int j = 0; j < this.puzzle.size; j++) {
+
+        checkElement(cursor);
+        if (yetToFind.size() == 0) return true;
+
+        // because we have the i and j counters, we should never have a NPE due to this
+        cursor = cursor.toRight;
+      }
+
+      cursor = lineReset;
     }
 
-    return true;
+    return false;
   }
 
-  private Coord[] findWord(String word) {
-    System.out.println("Attempting to find \"" + word + "\"...");
-    Coord[] ret = null;
+  // finder-caller
 
-    Method[] methods = this.getClass().getDeclaredMethods();
-    List<Method> methodsList = Arrays.asList(methods);
+  private void checkElement(PuzzleElement start) {
+    // System.out.println("Attempting to find \"" + word + "\"...");
 
-    // throws UnsupportedOperationException: remove
-    // Iterator<Method> it = methodsList.iterator();
-    // while (it.hasNext()) {
-    //   Method m = it.next();
-    //   if (!m.getName().startsWith("findWord") || m.getName().length() < 9) {
-    //     it.remove();
-    //   }
-    // }
+    Iterator<String> it = this.yetToFind.iterator();
+    String word;
+    // for (String word : this.yetToFind) {
+    WORDCYCLE:
+    while (it.hasNext()) {
+      word = it.next();
 
-    // alternate B
-    // for (Method m : methods) {
-    //   if (!m.getName().startsWith("findWord") || m.getName().length() < 9) {
-    //     m = null;
-    //   }
-    // }
+      // invoke the methods we collected earlier
+      // for (Method m : methodsList) {
+      for (Method m : this.finderMethods) {
+        if (m != null) {
+          // System.out.println(m.getName());
 
-    // alternate C -- this is the one that we're going with
-    for (int i = 0; i < methods.length; i++) {
-      Method m = methods[i];
-      if (!m.getName().startsWith("findWord") || m.getName().length() < 9) {
-        methods[i] = null;
-      }
-    }
+          try {
+            // System.out.println("trying to invoke method " + m.getName() + "() on \'" + word + "\'");
+            Object result = m.invoke(this, start, word);
 
+            // if result is null this doesn't enter so we're ok
+            if (result instanceof Boolean) {
+              Boolean boolRes = (Boolean) result;
+              if (boolRes.booleanValue()) {
 
-    // check output -- to invoke methods later
-    for (Method m : methodsList) {
-      if (m != null) {
-        // System.out.println(m.getName());
+                // this.yetToFind.remove(word);
+                // // this.puzzle.hiddenWords.remove(word);
+                // return;
 
-        try {
-          System.out.println("trying to invoke method " + m.getName() + "() on \'" + word + "\'");
-          Object result = m.invoke(this, word);
+                it.remove();
+                continue WORDCYCLE;
+              }
+            }
 
-          if (result instanceof Coord[] && result != null) {
-            // System.out.println("Adding result object [" + result.toString() + "] to puzzle.locs");
-            // this.puzzle.locs.add((Coord[]) result);
-            System.out.println("Returning result object [" + result.toString() + "] to caller.");
-            return (Coord[]) result;
-          }
-        } catch (Exception ex) {
-          if (ex instanceof IllegalAccessException) {
+          } catch (Exception ex) {
+            if (ex instanceof IllegalAccessException) {
 
-          } else if (ex instanceof IllegalArgumentException) {
+            } else if (ex instanceof IllegalArgumentException) {
 
-          } else {
+            } else {
+
+            }
+          } finally {
 
           }
-        } finally {
 
         }
 
@@ -109,94 +123,94 @@ public class PuzzleSolver extends PuzzleReader {
 
     }
 
-    // alternate B -- either of these methods will work
-    // for (Method m : methods) {
-    //   if (m != null) {
-    //     System.out.println(m.getName());
-    //   }
-    // }
-
-    // ret = findWordHoriz(word);
-
-    return ret;
   }
 
+  // finders
+
   @SuppressWarnings("unused")
-  private Coord[] findWordHoriz(String word) {
+  private Coord[] findWordHoriz(PuzzleElement start, String word) {
     Coord[] ret = null;
     return ret;
   }
 
   @SuppressWarnings("unused")
-  private Coord[] findWordDiagDesc(String word) {
-    // Coord[] ret = null;
+  private Boolean findWordDiagDesc(PuzzleElement start, String word) {
+
     String wordRev = reverseWord(word);
 
     // System.out.println(word);
     // System.out.println(wordRev);
 
-    PuzzleElement cursor = this.puzzle.topLeftCorner;
-    PuzzleElement lineReset = cursor.below;
-    PuzzleElement checkIfFound;
+    // TODO figure out based on coordinates and word length when to actually try to search diagonally
     Integer calcIts = this.puzzle.size - word.length() + 1;
     Boolean found, foundRev;
+    found = foundRev = true;
 
-    for (int i = 0; i < calcIts; i++) {
-      // again uses assumption that puzzle will be square
-      for (int j = 0; j < calcIts; j++) {
+    // leave cursor as our placeholder, then iterate in the diagonal descending 
+    // direction checking both word and wordRev to see if this is a match
+    for (int k = 0; k < word.length(); k++) {
 
-        // leave cursor as our placeholder, then iterate in the diagonal descending 
-        // direction checking both word and wordRev to see if this is a match
-        checkIfFound = cursor;
-        found = foundRev = true;
-        for (int k = 0; k < word.length(); k++) {
+      if (found.booleanValue() && !start.value.equals(word.charAt(k))) {
+        found = false;
+      }
+      if (foundRev.booleanValue() && !start.value.equals(wordRev.charAt(k))) {
+        foundRev = false;
+      }
 
-          if (found.booleanValue() && !checkIfFound.value.equals(word.charAt(k))) {
-            found = false;
+      if (!found && !foundRev) {
+        break;
+      } else if (k == word.length() - 1) {
+        // we've found a word here -- record it
+        Coord[] locs = new Coord[word.length()];
+
+        // with this method, start has been reassigned and now points to the end of
+        // the word we just checked, not the beginning
+        Integer i = start.location.y;
+        Integer j = start.location.x;
+
+        if (found) {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j - s, i - s);
+            locs[word.length() - 1 - s] = c;
           }
-          if (foundRev.booleanValue() && !checkIfFound.value.equals(wordRev.charAt(k))) {
-            foundRev = false;
+        } else {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j - s, i - s);
+            locs[s] = c;
           }
-
-          if (!found && !foundRev) {
-            break;
-          } else if (k == word.length() - 1) {
-            // we've found a word here -- record it
-            Coord[] locs = new Coord[word.length()];
-
-            if (found) {
-              for (int s = 0; s < word.length(); s++) {
-                Coord c = new Coord(j + s, i + s);
-                locs[s] = c;
-              }
-            } else {
-              for (int s = 0; s < word.length(); s++) {
-                Coord c = new Coord(j + s, i + s);
-                locs[word.length() - 1 - s] = c;
-              }
-            }
-
-            // return locs;
-            this.puzzle.locs.add(locs);
-
-          } else if (checkIfFound.belowToRight == null) {
-            // this should not happen
-            throw new RuntimeException("The next element to be checked is null...");
-          } else {
-            checkIfFound = checkIfFound.belowToRight;
-          }
-
         }
 
-        // because we have the i and j counters, we should never have a NPE due to this
-        cursor = cursor.toRight;
+        // return locs;
+        this.puzzle.locs.add(locs);
+        return true;
+
+      } else if (start.belowToRight == null) {
+        // this should not happen
+        throw new RuntimeException("The element which is supposed to be checked next is null...");
+      } else {
+        start = start.belowToRight;
       }
-      cursor = lineReset;
-      lineReset = cursor.below;
+
     }
 
-    // return ret;
-    return null;
+    return false;
+  }
+
+  // private helper methods
+
+  private void collectFinderMethods() {
+    this.finderMethods = this.getClass().getDeclaredMethods();
+    // List<Method> methodsList = Arrays.asList(methods);
+
+    // we're going to execute all the methods that start with "findWord"
+    for (int i = 0; i < this.finderMethods.length; i++) {
+      Method m = this.finderMethods[i];
+      if (!m.getName().startsWith("findWord")/* || m.getName().length() < 9*/) {
+        this.finderMethods[i] = null;
+      }
+    }
+
+    // TODO collapse to remove null slots
   }
 
   private String reverseWord(String word) {
@@ -208,55 +222,38 @@ public class PuzzleSolver extends PuzzleReader {
   }
 
   public static void main(String[] args) {
-    System.out.println("Inside the puzzle solver!");
 
-    PuzzleSolver ps = null;
+    String path = System.getProperty("user.dir");
+    path += "/puzzles/Puzzle1b.txt";
+    PuzzleSolver ps = new PuzzleSolver(path);
 
-    System.out.println("instantiating ps");
-
-    if (args != null && args.length > 0) {
-      if (args.length > 1) {
-        System.err.println("Invalid Usage: ...");
-        System.exit(1);
-        return;
-      } else {
-        File input = new File(args[0]);
-        if (input.exists()) {
-          ps = new PuzzleSolver(input);
-        } else {
-          System.err.println("No such file. ...");
-          System.exit(2);
-          return;
-        }
-      }
-    } else {
-      System.out.println("no argument supplied -- using System.in");
-      ps = new PuzzleSolver();
-    }
-
-    System.out.println("reading puzzle");
+    // if (args != null && args.length > 0) {
+    //   if (args.length > 1) {
+    //     System.err.println("Invalid Usage: ...");
+    //     System.exit(1);
+    //     return;
+    //   } else {
+    //     File input = new File(args[0]);
+    //     if (input.exists()) {
+    //       ps = new PuzzleSolver(input);
+    //     } else {
+    //       System.err.println("No such file. ...");
+    //       System.exit(2);
+    //       return;
+    //     }
+    //   }
+    // } else {
+    //   System.out.println("no argument supplied -- using System.in");
+    //   ps = new PuzzleSolver();
+    // }
 
     try {
       ps.readPuzzle();
     } catch (Exception e) {
       e.printStackTrace();
     }
-    System.out.println("end of func");
-    ///////////////////////////////////////
 
-    //	Scanner s = new Scanner(ps.is);
-
-    //	while (s.hasNextLine()) {
-    //	    System.out.println(s.nextLine());
-    //	}
-
-    /////////////////////////////////////////
-
-    //	ps.is = System.in;
-
-    //	while (ps.is.hasNextLine()) {
-    //	    System.out.println(ps.is.nextLine());
-    //	}
+    ps.search();
 
   }
 }

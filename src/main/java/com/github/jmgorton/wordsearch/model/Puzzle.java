@@ -4,9 +4,10 @@ import java.util.*;
 
 public class Puzzle {
 
-    // turn into map?
+    // TODO turn into map
     public List<String> hiddenWords;
     public List<Coord[]> locs;
+    public Map<String, Coord[]> locks;
 
     public PuzzleElement topLeftCorner = null;
     public PuzzleElement topRightCorner = null;
@@ -18,6 +19,7 @@ public class Puzzle {
     public Puzzle() {
         this.hiddenWords = new ArrayList<String>();
         this.locs = new ArrayList<Coord[]>();
+        this.locks = new HashMap<String, Coord[]>();
     }
 
 }
