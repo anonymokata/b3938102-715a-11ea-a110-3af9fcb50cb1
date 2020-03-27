@@ -39,31 +39,36 @@ public class PuzzleSolver extends PuzzleReader {
 
   public Boolean search() {
 
-    PuzzleElement cursor = this.puzzle.topLeftCorner;
-    PuzzleElement lineReset;
+    // these are only needed here if using i, j
+    // PuzzleElement cursor = this.puzzle.topLeftCorner;
+    // PuzzleElement lineReset;
 
     // this copies values
     this.yetToFind = new ArrayList<String>(this.puzzle.hiddenWords);
-    // this copies reference
+    // this copies references
     // this.yetToFind = this.puzzle.hiddenWords;
 
     // TODO change this to the puzzleelement assignment ... do we need i, j for assigning coords?
     // no we should have the coords within the puzzle element
-    for (int i = 0; i < this.puzzle.size; i++) {
+    // for (int i = 0; i < this.puzzle.size; i++) {
+    for (PuzzleElement lineReset = this.puzzle.topLeftCorner; lineReset != null; lineReset = lineReset.below) {
 
-      lineReset = cursor.below;
+      // lineReset = cursor.below; // only necessary if using i, j
 
       // again uses assumption that puzzle will be square
-      for (int j = 0; j < this.puzzle.size; j++) {
+      // for (int j = 0; j < this.puzzle.size; j++) {
+      for (PuzzleElement cursor = lineReset; cursor != null; cursor = cursor.toRight) {
 
+        if (cursor.location != null) System.out.println(cursor.location.y + ", " + cursor.location.x);
+        else System.out.println("null location");
         checkElement(cursor);
         if (yetToFind.size() == 0) return true;
 
         // because we have the i and j counters, we should never have a NPE due to this
-        cursor = cursor.toRight;
+        // cursor = cursor.toRight; // only necessary if using i, j
       }
 
-      cursor = lineReset;
+      // cursor = lineReset; // only needed if using i, j
     }
 
     return false;

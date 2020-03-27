@@ -91,6 +91,7 @@ public class PuzzleReader {
     PuzzleElement toLeftElement = null;
     // if efficiency was a main goal, we would probably handle the first line separately
     // so we could eliminate if-blocks if there are many rows to iterate over
+    // readability and maintainability also take an impact ... we prob should
     while (s.hasNextLine()) {
       // validate next string
       String toParse = s.nextLine();
@@ -116,6 +117,9 @@ public class PuzzleReader {
         this.puzzle.topLeftCorner = firstColThisRowElement;
         Coord origin = new Coord(0, 0);
         this.puzzle.topLeftCorner.setCoords(origin);
+      } else {
+        Coord firstInRow = new Coord(0, row);
+        firstColThisRowElement.setCoords(firstInRow);
       }
       
       // prepare to begin appending elements to this row, via first element
@@ -123,11 +127,17 @@ public class PuzzleReader {
 
       for (int i = 1; i < thisRowLetters.length; i++) {
         // append each new element, set it's coordinates, and update the "cursor"
-        // TODO set new topRightCorner and bottomLeftCorner fields
         PuzzleElement thisElement = new PuzzleElement(thisRowLetters[i], toLeftElement);
         Coord loc = new Coord(i, row);
         thisElement.setCoords(loc);
         toLeftElement = thisElement;
+
+        // set topRightCorner and bottomLeftCorner elements
+        if (row == 0 && i == this.puzzle.size - 1) {
+          this.puzzle.topRightCorner = thisElement;
+        } else if (row == this.puzzle.size - 1 && i == 0) {
+          this.puzzle.bottomLeftCorner = thisElement;
+        }
       }
 
       row++;
