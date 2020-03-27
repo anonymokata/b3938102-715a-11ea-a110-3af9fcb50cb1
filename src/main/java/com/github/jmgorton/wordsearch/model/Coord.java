@@ -3,8 +3,8 @@ package com.github.jmgorton.wordsearch.model;
 public class Coord {
   public Integer x, y;
 
-  // TODO put protections on this to reject negative numbers?
   public Coord(Integer x, Integer y) {
+    if (x < 0 || y < 0) throw new RuntimeException("Invalid coordinate value(s) -- can't be negative.");
     this.x = x;
     this.y = y;
   }

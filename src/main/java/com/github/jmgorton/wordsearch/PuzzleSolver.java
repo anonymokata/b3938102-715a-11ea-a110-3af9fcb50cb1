@@ -3,6 +3,7 @@ package com.github.jmgorton.wordsearch;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,36 +40,22 @@ public class PuzzleSolver extends PuzzleReader {
 
   public Boolean search() {
 
-    // these are only needed here if using i, j
-    // PuzzleElement cursor = this.puzzle.topLeftCorner;
-    // PuzzleElement lineReset;
-
     // this copies values
     this.yetToFind = new ArrayList<String>(this.puzzle.hiddenWords);
     // this copies references
     // this.yetToFind = this.puzzle.hiddenWords;
 
-    // TODO change this to the puzzleelement assignment ... do we need i, j for assigning coords?
-    // no we should have the coords within the puzzle element
-    // for (int i = 0; i < this.puzzle.size; i++) {
     for (PuzzleElement lineReset = this.puzzle.topLeftCorner; lineReset != null; lineReset = lineReset.below) {
 
-      // lineReset = cursor.below; // only necessary if using i, j
-
-      // again uses assumption that puzzle will be square
-      // for (int j = 0; j < this.puzzle.size; j++) {
+      // loops no longer use assumption that puzzle is square, or even rectangular
+      // but do assume that all rows are left-aligned
+      // note: other places in code still assume puzzle is square, e.g. singular puzzle.size value
       for (PuzzleElement cursor = lineReset; cursor != null; cursor = cursor.toRight) {
 
-        if (cursor.location != null) System.out.println(cursor.location.y + ", " + cursor.location.x);
-        else System.out.println("null location");
         checkElement(cursor);
         if (yetToFind.size() == 0) return true;
-
-        // because we have the i and j counters, we should never have a NPE due to this
-        // cursor = cursor.toRight; // only necessary if using i, j
       }
 
-      // cursor = lineReset; // only needed if using i, j
     }
 
     return false;
@@ -77,34 +64,24 @@ public class PuzzleSolver extends PuzzleReader {
   // finder-caller
 
   private void checkElement(PuzzleElement start) {
-    // System.out.println("Attempting to find \"" + word + "\"...");
 
     Iterator<String> it = this.yetToFind.iterator();
     String word;
-    // for (String word : this.yetToFind) {
     WORDCYCLE:
     while (it.hasNext()) {
       word = it.next();
 
       // invoke the methods we collected earlier
-      // for (Method m : methodsList) {
       for (Method m : this.finderMethods) {
         if (m != null) {
-          // System.out.println(m.getName());
 
           try {
-            // System.out.println("trying to invoke method " + m.getName() + "() on \'" + word + "\'");
             Object result = m.invoke(this, start, word);
 
             // if result is null this doesn't enter so we're ok
             if (result instanceof Boolean) {
               Boolean boolRes = (Boolean) result;
               if (boolRes.booleanValue()) {
-
-                // this.yetToFind.remove(word);
-                // // this.puzzle.hiddenWords.remove(word);
-                // return;
-
                 it.remove();
                 continue WORDCYCLE;
               }
@@ -141,13 +118,12 @@ public class PuzzleSolver extends PuzzleReader {
   @SuppressWarnings("unused")
   private Boolean findWordDiagDesc(PuzzleElement start, String word) {
 
+    // if our starting point does not provide us enough room to even find the word, return false
+    if (start.location.x > this.puzzle.size - word.length() 
+      || start.location.y > this.puzzle.size - word.length()) return false;
+
     String wordRev = reverseWord(word);
 
-    // System.out.println(word);
-    // System.out.println(wordRev);
-
-    // TODO figure out based on coordinates and word length when to actually try to search diagonally
-    Integer calcIts = this.puzzle.size - word.length() + 1;
     Boolean found, foundRev;
     found = foundRev = true;
 
@@ -185,12 +161,11 @@ public class PuzzleSolver extends PuzzleReader {
           }
         }
 
-        // return locs;
-        this.puzzle.locs.add(locs);
+        this.puzzle.wordLocs.put(word, locs);
         return true;
 
       } else if (start.belowToRight == null) {
-        // this should not happen
+        // this should not ever happen
         throw new RuntimeException("The element which is supposed to be checked next is null...");
       } else {
         start = start.belowToRight;
@@ -205,7 +180,6 @@ public class PuzzleSolver extends PuzzleReader {
 
   private void collectFinderMethods() {
     this.finderMethods = this.getClass().getDeclaredMethods();
-    // List<Method> methodsList = Arrays.asList(methods);
 
     // we're going to execute all the methods that start with "findWord"
     for (int i = 0; i < this.finderMethods.length; i++) {
@@ -215,11 +189,12 @@ public class PuzzleSolver extends PuzzleReader {
       }
     }
 
-    // TODO collapse to remove null slots
+    // TODO collapse to remove null slots 
+    // cause it annoys me knowing they're there
+    // List<Method> temp = Arrays.asList(this.finderMethods);
   }
 
   private String reverseWord(String word) {
-    // System.out.println(word);
     if (word.length() < 2) return word;
     return word.charAt(word.length() - 1) 
     + reverseWord(word.substring(1, word.length() - 1)) 
