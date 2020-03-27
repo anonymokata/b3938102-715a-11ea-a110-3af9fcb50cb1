@@ -39,9 +39,35 @@ public class PuzzleSolverTest {
         assertNotNull(p.puzzle.locs.get(0));
         assertEquals(5, p.puzzle.locs.get(0).length);
 
-        for (Coord c : p.puzzle.locs.get(0)) {
-            System.out.println(c.toString());
+        // for (Coord c : p.puzzle.locs.get(0)) {
+        //     System.out.println(c.toString());
+        // }
+
+        assertEquals(Integer.valueOf(7), p.puzzle.locs.get(0)[0].x);
+        assertEquals(Integer.valueOf(3), p.puzzle.locs.get(0)[4].x);
+        assertEquals(Integer.valueOf(4), p.puzzle.locs.get(0)[0].y);
+        assertEquals(Integer.valueOf(0), p.puzzle.locs.get(0)[4].y);
+    }
+
+    @Test
+    public void testSolveTwoWords() {
+        String path = System.getProperty("user.dir");
+        path += "/puzzles/Puzzle1c.txt";
+        PuzzleSolver p = new PuzzleSolver(path);
+        try {
+            p.readPuzzle();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        p.search();
+
+        assertEquals(1, p.puzzle.locs.size());
+        assertNotNull(p.puzzle.locs.get(0));
+        assertEquals(5, p.puzzle.locs.get(0).length);
+
+        // for (Coord c : p.puzzle.locs.get(0)) {
+        //     System.out.println(c.toString());
+        // }
 
         assertEquals(Integer.valueOf(7), p.puzzle.locs.get(0)[0].x);
         assertEquals(Integer.valueOf(3), p.puzzle.locs.get(0)[4].x);
