@@ -36,7 +36,7 @@ Running the app with no arguments prompts the app to attempt to read the puzzle 
 
 Be sure the puzzle is in the right format!
 
-## Other Commands
+## Other Info
 For an overview of what maven is, see [Maven's 5 Minute Guide]. 
 
 For a list of other maven lifecycle phases to target, check [this][Lifecycle targets] out.
