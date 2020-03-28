@@ -21,14 +21,11 @@ public class App extends PuzzleSolver {
   }
 
   public static void main(String[] args) {
-    System.out.println("App.java ...");
+    // System.out.println("App.java ...");
 
-    for (int i = 0; i < args.length; i++) {
-      System.out.println(args[0]);
-    }
-
-    // PuzzleSolver.main(args);
-
+    // for (int i = 0; i < args.length; i++) {
+    //   System.out.println(args[0]);
+    // }
 
 
     PuzzleSolver ps = null;
@@ -61,5 +58,6 @@ public class App extends PuzzleSolver {
         ex.printStackTrace();
     }
     ps.search();
+    ps.printWordLocations();
   }
 }

@@ -34,6 +34,8 @@ Running the app with no arguments prompts the app to attempt to read the puzzle 
 
 `java -cp target/<file-name-SNAPSHOT>.jar com.github.jmgorton.wordsearch.App <relative/path/to/some/puzzle.txt>`
 
+Be sure the puzzle is in the right format!
+
 ## Other Commands
 For an overview of what maven is, see [Maven's 5 Minute Guide]. 
 

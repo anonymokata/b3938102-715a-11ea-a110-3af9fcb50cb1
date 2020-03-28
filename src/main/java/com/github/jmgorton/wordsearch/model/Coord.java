@@ -11,7 +11,7 @@ public class Coord {
 
   @Override
   public String toString() {
-    return "[" + x + ", " + y + "]";
+    return "(" + x + "," + y + ")";
   }
 
   public static void main(String[] args) {

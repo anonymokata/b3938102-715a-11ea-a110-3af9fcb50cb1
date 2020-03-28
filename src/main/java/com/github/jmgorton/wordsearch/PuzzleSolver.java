@@ -353,7 +353,16 @@ public class PuzzleSolver extends PuzzleReader {
   }
 
   public void printWordLocations() {
-    
+    for (String s : this.puzzle.wordLocs.keySet()) {
+      Coord[] locs = this.puzzle.wordLocs.get(s);
+      System.out.print(s + ": ");
+      StringBuilder toPrint = new StringBuilder("");
+      for (Coord c : locs) {
+        toPrint.append(c.toString()).append(",");
+      }
+      toPrint.deleteCharAt(toPrint.length() - 1);
+      System.out.println(toPrint);
+    }
   }
 
   // private helper methods

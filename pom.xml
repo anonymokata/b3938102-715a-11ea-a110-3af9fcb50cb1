@@ -9,7 +9,6 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>wordsearch</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://github.com/jmgorton/WordSearch</url>
 
   <properties>
