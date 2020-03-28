@@ -21,15 +21,45 @@ public class App extends PuzzleSolver {
   }
 
   public static void main(String[] args) {
-    System.out.println("Hello World!");
+    System.out.println("App.java ...");
 
     for (int i = 0; i < args.length; i++) {
       System.out.println(args[0]);
     }
 
-    //	PuzzleSolver ps = new PuzzleSolver();
-    //	ps.main(args);
+    // PuzzleSolver.main(args);
 
-    PuzzleSolver.main(args);
+
+
+    PuzzleSolver ps = null;
+    if (args != null && args.length > 0) {
+      if (args.length > 1) {
+        System.err.println("Invalid Usage: ... Too many arguments supplied");
+        System.exit(1);
+        // return;
+      } else {
+        File input = new File(args[0]);
+        if (input.exists()) {
+          ps = new PuzzleSolver(input);
+        } else {
+          System.err.println("No such file. ...");
+          System.exit(2);
+          // return;
+        }
+      }
+    } else {
+      System.out.println("No argument supplied ... Reading from System.in");
+      ps = new PuzzleSolver();
+    }
+
+    // String path = System.getProperty("user.dir");
+    // path += "/puzzles/Puzzle1a.txt";
+    // PuzzleSolver ps = new PuzzleSolver(path);
+    try {
+        ps.readPuzzle();
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+    ps.search();
   }
 }

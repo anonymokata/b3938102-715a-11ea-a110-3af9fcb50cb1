@@ -2,10 +2,13 @@ package com.github.jmgorton.wordsearch;
 
 import java.io.*;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.github.jmgorton.wordsearch.model.Coord;
 import com.github.jmgorton.wordsearch.model.Puzzle;
 import com.github.jmgorton.wordsearch.model.PuzzleElement;
+
+import org.reflections.Reflections;
 
 public class PuzzleReader {
 
@@ -175,20 +178,17 @@ public class PuzzleReader {
 
   public static void main(String[] args) {
 
-    PuzzleSolver ps = new PuzzleSolver();
+    // PuzzleSolver ps = new PuzzleSolver();
+    
 
-    Scanner s = new Scanner(ps.input);
+    // test ...
+    System.out.println();
 
-    while (s.hasNextLine()) {
-      System.out.println(s.nextLine());
+    Reflections ref = new Reflections("com.github.jmgorton.wordsearch");
+    Set<Class<? extends PuzzleReader>> subTypes = ref.getSubTypesOf(PuzzleReader.class);
+    for (Class<? extends PuzzleReader> c : subTypes) {
+      System.out.println(c.getName());
     }
 
-    //	ps.is = System.in;
-
-    //	while (ps.is.hasNextLine()) {
-    //	    System.out.println(ps.is.nextLine());
-    //	}
-
-    s.close();
   }
 }

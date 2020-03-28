@@ -171,9 +171,63 @@ public class PuzzleSolver extends PuzzleReader {
   }
 
   @SuppressWarnings("unused")
-  private Coord[] findWordHoriz(PuzzleElement start, String word) {
-    Coord[] ret = null;
-    return ret;
+  private Boolean findWordHoriz(PuzzleElement start, String word) {
+    
+    // if our starting point does not provide us enough room to even find the word, return false
+    if (start.location.x > this.puzzle.size - word.length()) return false;
+
+    String wordRev = reverseWord(word);
+
+    Boolean found, foundRev;
+    found = foundRev = true;
+
+    // leave cursor as our placeholder, then iterate to the right horizontally
+    // checking both word and wordRev to see if this is a match
+    for (int k = 0; k < word.length(); k++) {
+
+      if (found.booleanValue() && !start.value.equals(word.charAt(k))) {
+        found = false;
+      }
+      if (foundRev.booleanValue() && !start.value.equals(wordRev.charAt(k))) {
+        foundRev = false;
+      }
+
+      if (!found && !foundRev) {
+        break;
+      } else if (k == word.length() - 1) {
+        // we've found a word here -- record it
+        Coord[] locs = new Coord[word.length()];
+
+        // with this method, start has been reassigned and now points to the end of
+        // the word we just checked, not the beginning
+        Integer i = start.location.y;
+        Integer j = start.location.x;
+
+        if (found) {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j - s, i);
+            locs[word.length() - 1 - s] = c;
+          }
+        } else {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j - s, i);
+            locs[s] = c;
+          }
+        }
+
+        this.puzzle.wordLocs.put(word, locs);
+        return true;
+
+      } else if (start.toRight == null) {
+        // this should not ever happen
+        throw new RuntimeException("The element which is supposed to be checked next is null...");
+      } else {
+        start = start.toRight;
+      }
+
+    }
+
+    return false;
   }
 
   @SuppressWarnings("unused")
@@ -235,6 +289,71 @@ public class PuzzleSolver extends PuzzleReader {
     }
 
     return false;
+  }
+
+  @SuppressWarnings("unused")
+  private Boolean findWordDiagAsc(PuzzleElement start, String word) {
+
+    // if our starting point does not provide us enough room to even find the word, return false
+    if (start.location.x > this.puzzle.size - word.length() 
+      || start.location.y < word.length() - 1) return false;
+
+    String wordRev = reverseWord(word);
+
+    Boolean found, foundRev;
+    found = foundRev = true;
+
+    // leave cursor as our placeholder, then iterate in the diagonal descending 
+    // direction checking both word and wordRev to see if this is a match
+    for (int k = 0; k < word.length(); k++) {
+
+      if (found.booleanValue() && !start.value.equals(word.charAt(k))) {
+        found = false;
+      }
+      if (foundRev.booleanValue() && !start.value.equals(wordRev.charAt(k))) {
+        foundRev = false;
+      }
+
+      if (!found && !foundRev) {
+        break;
+      } else if (k == word.length() - 1) {
+        // we've found a word here -- record it
+        Coord[] locs = new Coord[word.length()];
+
+        // with this method, start has been reassigned and now points to the end of
+        // the word we just checked, not the beginning
+        Integer i = start.location.y;
+        Integer j = start.location.x;
+
+        if (found) {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j - s, i + s);
+            locs[word.length() - 1 - s] = c;
+          }
+        } else {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j - s, i + s);
+            locs[s] = c;
+          }
+        }
+
+        this.puzzle.wordLocs.put(word, locs);
+        return true;
+
+      } else if (start.aboveToRight == null) {
+        // this should not ever happen
+        throw new RuntimeException("The element which is supposed to be checked next is null...");
+      } else {
+        start = start.aboveToRight;
+      }
+
+    }
+
+    return false;
+  }
+
+  public void printWordLocations() {
+    
   }
 
   // private helper methods

@@ -117,8 +117,8 @@ public class PuzzleElement {
             // i think we don't need to do anything in this case
         }
 
-        // TODO investigate ... for some reason this was causing neighbors that should have
-        // stayed null to be instantiated ... i think
+        // TODO investigate ... for some reason this was causing neighbors that should have stayed null
+        // to be instantiated ... i think ... moved it to the end of the elementAbove != null if-block
         // updateNeighbors();
     }
 

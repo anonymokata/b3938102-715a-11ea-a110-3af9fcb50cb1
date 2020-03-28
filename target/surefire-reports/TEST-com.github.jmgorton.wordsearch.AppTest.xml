@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.jmgorton.wordsearch.AppTest" time="0.171" tests="14" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.github.jmgorton.wordsearch.AppTest" time="0.041" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -7,7 +7,7 @@
     <property name="file.encoding.pkg" value="sun.io"/>
     <property name="sun.cpu.isalist" value=""/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/test-classes:/Users/jaredgorton/Documents/Maven/wordsearch/target/classes:/Users/jaredgorton/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/jaredgorton/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="java.class.path" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/test-classes:/Users/jaredgorton/Documents/Maven/wordsearch/target/classes:/Users/jaredgorton/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/jaredgorton/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/jaredgorton/.m2/repository/org/reflections/reflections/0.9.12/reflections-0.9.12.jar:/Users/jaredgorton/.m2/repository/org/javassist/javassist/3.26.0-GA/javassist-3.26.0-GA.jar:"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
@@ -17,10 +17,10 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/surefire/surefirebooter15368914652583319586.jar /Users/jaredgorton/Documents/Maven/wordsearch/target/surefire 2020-03-28T01-06-48_532-jvmRun1 surefire14860669887563460950tmp surefire_018050979263358753556tmp"/>
+    <property name="sun.java.command" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/surefire/surefirebooter11300854400016787164.jar /Users/jaredgorton/Documents/Maven/wordsearch/target/surefire 2020-03-28T16-34-14_955-jvmRun1 surefire1812077120073320214tmp surefire_09003864953480490963tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/test-classes:/Users/jaredgorton/Documents/Maven/wordsearch/target/classes:/Users/jaredgorton/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/jaredgorton/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:"/>
+    <property name="surefire.test.class.path" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/test-classes:/Users/jaredgorton/Documents/Maven/wordsearch/target/classes:/Users/jaredgorton/.m2/repository/junit/junit/4.11/junit-4.11.jar:/Users/jaredgorton/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/Users/jaredgorton/.m2/repository/org/reflections/reflections/0.9.12/reflections-0.9.12.jar:/Users/jaredgorton/.m2/repository/org/javassist/javassist/3.26.0-GA/javassist-3.26.0-GA.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="/Users/jaredgorton"/>
     <property name="user.language" value="en"/>
@@ -33,7 +33,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/surefire/surefirebooter15368914652583319586.jar"/>
+    <property name="surefire.real.class.path" value="/Users/jaredgorton/Documents/Maven/wordsearch/target/surefire/surefirebooter11300854400016787164.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="9.0.1+11"/>
@@ -60,18 +60,18 @@
     <property name="java.class.version" value="53.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="nullFilePathCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0.004"/>
+  <testcase name="nullFilePathCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0.006"/>
   <testcase name="invalidFileCheckInput" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
-  <testcase name="validInputFileCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0.037"/>
-  <testcase name="validInputFilePathCheckFile" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
-  <testcase name="nullFilePathCheckInput" classname="com.github.jmgorton.wordsearch.AppTest" time="0.001"/>
+  <testcase name="validInputFileCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0.001"/>
+  <testcase name="validInputFilePathCheckFile" classname="com.github.jmgorton.wordsearch.AppTest" time="0.001"/>
+  <testcase name="nullFilePathCheckInput" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
   <testcase name="validInputFileCheckFile" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
   <testcase name="invalidFileCheckFile" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
   <testcase name="invalidFilePathCheckInput" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
-  <testcase name="invalidFileCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
+  <testcase name="invalidFileCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0.001"/>
   <testcase name="invalidFilePathCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
   <testcase name="invalidFilePathCheckFile" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
-  <testcase name="nullFilePathCheckFile" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
+  <testcase name="nullFilePathCheckFile" classname="com.github.jmgorton.wordsearch.AppTest" time="0.001"/>
   <testcase name="validInputFilePathCheckInput" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
   <testcase name="validInputFilePathCheckFilePath" classname="com.github.jmgorton.wordsearch.AppTest" time="0"/>
 </testsuite>
