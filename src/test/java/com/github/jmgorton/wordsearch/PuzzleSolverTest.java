@@ -4,10 +4,6 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
 
-import com.github.jmgorton.wordsearch.model.Coord;
-
-// import com.github.jmgorton.wordsearch.model.Coord;
-
 import org.junit.Test;
 
 public class PuzzleSolverTest {

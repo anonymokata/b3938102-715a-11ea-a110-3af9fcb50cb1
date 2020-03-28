@@ -4,6 +4,10 @@ import java.io.File;
 
 public class App extends PuzzleSolver {
 
+
+  // test ... instance of class A which extends class B calls method defined in B, but which uses
+  // a method that has been overridden in A -- which version of the method is used?
+
   public App() {
 	  super();
   }
