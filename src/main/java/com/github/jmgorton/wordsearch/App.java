@@ -51,6 +51,7 @@ public class App extends PuzzleSolver {
 
     // String path = System.getProperty("user.dir");
     // path += "/puzzles/Puzzle1a.txt";
+    // path += args[0];
     // PuzzleSolver ps = new PuzzleSolver(path);
     try {
         ps.readPuzzle();
