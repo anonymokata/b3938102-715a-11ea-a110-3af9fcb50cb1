@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.lang.reflect.Method;
 
+import com.github.jmgorton.wordsearch.model.Coord;
+
 // import com.github.jmgorton.wordsearch.model.Coord;
 
 import org.junit.Test;
@@ -21,6 +23,8 @@ public class PuzzleSolverTest {
         assertNotNull(a.puzzle);
         assertNotNull(a.puzzle.hiddenWords);
         assertNull(a.puzzle.topLeftCorner);
+        assertNull(a.puzzle.topRightCorner);
+        assertNull(a.puzzle.bottomLeftCorner);
     }
 
     @Test
@@ -35,9 +39,6 @@ public class PuzzleSolverTest {
         }
         p.search();
 
-        // assertEquals(1, p.puzzle.locs.size());
-        // assertNotNull(p.puzzle.locs.get(0));
-        // assertEquals(5, p.puzzle.locs.get(0).length);
         assertEquals(1, p.puzzle.wordLocs.size());
         assertNotNull(p.puzzle.wordLocs.get("DWARF"));
         assertEquals(5, p.puzzle.wordLocs.get("DWARF").length);
@@ -46,10 +47,6 @@ public class PuzzleSolverTest {
         //     System.out.println(c.toString());
         // }
 
-        // assertEquals(Integer.valueOf(7), p.puzzle.locs.get(0)[0].x);
-        // assertEquals(Integer.valueOf(3), p.puzzle.locs.get(0)[4].x);
-        // assertEquals(Integer.valueOf(4), p.puzzle.locs.get(0)[0].y);
-        // assertEquals(Integer.valueOf(0), p.puzzle.locs.get(0)[4].y);
         assertEquals(Integer.valueOf(7), p.puzzle.wordLocs.get("DWARF")[0].x);
         assertEquals(Integer.valueOf(3), p.puzzle.wordLocs.get("DWARF")[4].x);
         assertEquals(Integer.valueOf(4), p.puzzle.wordLocs.get("DWARF")[0].y);
@@ -68,21 +65,23 @@ public class PuzzleSolverTest {
         }
         p.search();
 
-        // assertEquals(1, p.puzzle.locs.size());
-        // assertNotNull(p.puzzle.locs.get(0));
-        // assertEquals(5, p.puzzle.locs.get(0).length);
         assertEquals(2, p.puzzle.wordLocs.size());
         assertNotNull(p.puzzle.wordLocs.get("DWARF"));
         assertNotNull(p.puzzle.wordLocs.get("SILMARILLION"));
 
-        // for (Coord c : p.puzzle.locs.get(0)) {
+        // for (Coord c : p.puzzle.wordLocs.get("SILMARILLION")) {
         //     System.out.println(c.toString());
         // }
 
-        // assertEquals(Integer.valueOf(7), p.puzzle.locs.get(0)[0].x);
-        // assertEquals(Integer.valueOf(3), p.puzzle.locs.get(0)[4].x);
-        // assertEquals(Integer.valueOf(4), p.puzzle.locs.get(0)[0].y);
-        // assertEquals(Integer.valueOf(0), p.puzzle.locs.get(0)[4].y);
+        assertEquals(Integer.valueOf(7), p.puzzle.wordLocs.get("DWARF")[0].x);
+        assertEquals(Integer.valueOf(3), p.puzzle.wordLocs.get("DWARF")[4].x);
+        assertEquals(Integer.valueOf(4), p.puzzle.wordLocs.get("DWARF")[0].y);
+        assertEquals(Integer.valueOf(0), p.puzzle.wordLocs.get("DWARF")[4].y);
+
+        assertEquals(Integer.valueOf(2), p.puzzle.wordLocs.get("SILMARILLION")[0].x);
+        assertEquals(Integer.valueOf(2), p.puzzle.wordLocs.get("SILMARILLION")[11].x);
+        assertEquals(Integer.valueOf(0), p.puzzle.wordLocs.get("SILMARILLION")[0].y);
+        assertEquals(Integer.valueOf(11), p.puzzle.wordLocs.get("SILMARILLION")[11].y);
     }
 
     @Test

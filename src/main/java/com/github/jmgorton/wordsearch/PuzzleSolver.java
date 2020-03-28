@@ -3,7 +3,6 @@ package com.github.jmgorton.wordsearch;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -109,6 +108,68 @@ public class PuzzleSolver extends PuzzleReader {
 
   // finders
 
+  // better to reuse more of this finders code ..? between methods, only changing
+  // starting point check, coordinate creation, and puzzle element iteration assignments
+  @SuppressWarnings("unused")
+  private Boolean findWordVert(PuzzleElement start, String word) {
+
+    // if our starting point does not provide us enough room to even find the word, return false
+    if (start.location.y > this.puzzle.size - word.length()) return false;
+
+    String wordRev = reverseWord(word);
+
+    Boolean found, foundRev;
+    found = foundRev = true;
+
+    // leave cursor as our placeholder, then iterate in the vertical descending 
+    // direction checking both word and wordRev to see if this is a match
+    for (int k = 0; k < word.length(); k++) {
+
+      if (found.booleanValue() && !start.value.equals(word.charAt(k))) {
+        found = false;
+      }
+      if (foundRev.booleanValue() && !start.value.equals(wordRev.charAt(k))) {
+        foundRev = false;
+      }
+
+      if (!found && !foundRev) {
+        break;
+      } else if (k == word.length() - 1) {
+        // we've found a word here -- record it
+        Coord[] locs = new Coord[word.length()];
+
+        // with this method, start has been reassigned and now points to the end of
+        // the word we just checked, not the beginning
+        Integer i = start.location.y;
+        Integer j = start.location.x;
+
+        if (found) {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j, i - s);
+            locs[word.length() - 1 - s] = c;
+          }
+        } else {
+          for (int s = 0; s < word.length(); s++) {
+            Coord c = new Coord(j, i - s);
+            locs[s] = c;
+          }
+        }
+
+        this.puzzle.wordLocs.put(word, locs);
+        return true;
+
+      } else if (start.below == null) {
+        // this should not ever happen
+        throw new RuntimeException("The element which is supposed to be checked next is null...");
+      } else {
+        start = start.below;
+      }
+
+    }
+
+    return false;
+  }
+
   @SuppressWarnings("unused")
   private Coord[] findWordHoriz(PuzzleElement start, String word) {
     Coord[] ret = null;
@@ -181,17 +242,29 @@ public class PuzzleSolver extends PuzzleReader {
   private void collectFinderMethods() {
     this.finderMethods = this.getClass().getDeclaredMethods();
 
+    Integer notNull = 0;
     // we're going to execute all the methods that start with "findWord"
+    // and get rid of the null elements ... just cause it's nicer
     for (int i = 0; i < this.finderMethods.length; i++) {
       Method m = this.finderMethods[i];
       if (!m.getName().startsWith("findWord")/* || m.getName().length() < 9*/) {
         this.finderMethods[i] = null;
+      } else {
+        notNull++;
       }
     }
 
-    // TODO collapse to remove null slots 
-    // cause it annoys me knowing they're there
-    // List<Method> temp = Arrays.asList(this.finderMethods);
+    // make the array with no null elements
+    Method[] copy = new Method[notNull];
+    Integer cursor = 0;
+    for (Method m : this.finderMethods) {
+      if (m != null) {
+        copy[cursor++] = m;
+      }
+    }
+
+    // reassign to our new array
+    this.finderMethods = copy;
   }
 
   private String reverseWord(String word) {
